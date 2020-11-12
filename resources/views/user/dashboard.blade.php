@@ -66,12 +66,11 @@
              <br>
 
 <div class="clearfix"></div>
-    <br>
 <div class="panel panel-default">
-  <div class="panel-heading"> <h3 style="color: #fff"> Account Statistics</h3></div>
+  <div class="panel-heading"> <h3 style="color: #fff"> Account Wallet</h3></div>
   <div class="panel-body">
       <div class="row">
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -86,7 +85,7 @@
                         </div>
                         <a href="#">
                             <div class="panel-footer">
-                                <span class="pull-left">Current Balance</span>
+                                <span class="pull-left">USD Balance</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -95,7 +94,67 @@
                 </div>
 
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-recycle fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge dashboard-balance-text">
+                                          {{ $basic->symbol }}  <span data-counter="counterup" data-value="{{ $repeat }}">{{ $repeat }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">BTC Balance</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-cloud-download fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge dashboard-balance-text">  {{ $basic->symbol }}   <span data-counter="counterup" data-value="{{ $deposit }}">{{ $deposit }}</span></div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">ETH Balance</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+
+            
+        </div>
+  </div>
+</div>
+    <br>
+<div class="panel panel-default">
+  <div class="panel-heading"> <h3 style="color: #fff"> Account Statistics</h3></div>
+  <div class="panel-body">
+      <div class="row">
+
+
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
@@ -120,7 +179,7 @@
                 </div>
 
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
                             <div class="row">
@@ -144,7 +203,7 @@
                 </div>
 
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
@@ -177,7 +236,6 @@
       <div class="panel-body">
          <iframe src="https://widget.coinlib.io/widget?type=full_v2&theme=light&cnt=5&pref_coin_id=1505&graph=yes" width="100%" height="350px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe>
       </div>
-     </div>
     </div>
     <br>
     <div class="panel panel-default">

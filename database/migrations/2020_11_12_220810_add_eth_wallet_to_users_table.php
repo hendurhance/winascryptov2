@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestimonialsTable extends Migration
+class AddEthWalletToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateTestimonialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('testimonials', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('image');
-            $table->binary('message');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('eth_wallet')->after('btc_wallet');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateTestimonialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('testimonials');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('eth_wallet');
+        });
     }
 }
