@@ -49,6 +49,8 @@ class UserController extends Controller
 
         $data['user'] = User::findOrFail(Auth::user()->id);
         $data['balance'] = $data['user'];
+        $data['btc_wallet'] = $data['user'];
+        $data['eth_wallet'] = $data['user'];
         $data['deposit'] = Deposit::whereUser_id(Auth::user()->id)->whereStatus(1)->sum('amount');
         $data['repeat'] = RepeatLog::whereUser_id(Auth::user()->id)->sum('amount');
         $data['withdraw'] = WithdrawLog::whereUser_id(Auth::user()->id)->whereIn('status',[2])->sum('amount');
@@ -134,6 +136,15 @@ class UserController extends Controller
         session()->flash('title','Success');
         Session::flash('type', 'success');
         return redirect()->back();
+    }
+    public function exchangeCrypto()
+    {
+        $data['page_title'] = 'Exchange Crypto';
+        $data['user'] = User::findOrFail(Auth::user()->id);
+        $data['balance'] = $data['user'];
+        $data['btc_wallet'] = $data['user'];
+        $data['eth_wallet'] = $data['user'];
+        return view('user.exchange-crypto', $data);
     }
     public function depositMethod()
     {

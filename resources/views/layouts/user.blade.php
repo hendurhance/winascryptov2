@@ -141,7 +141,12 @@
                         <i class="fa fa-history"></i><span class="title">Repeat History</span>
                     </a>
                 </li>
-
+                
+                <li class="nav-item">
+                    <a href="{!! route('exchange-crypto') !!}" class="nav-link ">
+                        <i class="fa fa-money"></i><span class="title"> Exchange Crypto</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{!! route('withdraw-request') !!}" class="nav-link ">
                         <i class="fa fa-money"></i><span class="title"> Withdraw Fund</span>

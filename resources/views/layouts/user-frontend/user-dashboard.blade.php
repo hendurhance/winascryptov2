@@ -116,7 +116,9 @@
                             <ul class="mega-menu mega-menu1 mega-menu2 menu-postion-2">
                                     
                                     <li class="mega-list mega-list1">
-                               
+                                    <a href="{!! route('exchange-crypto') !!}" class="nav-link ">
+                                        <span class="title"> Exchange Crypto</span>
+                                    </a>
                                     <a href="{!! route('withdraw-request') !!}" class="nav-link ">
                                         <span class="title"> Withdraw Fund</span>
                                     </a>

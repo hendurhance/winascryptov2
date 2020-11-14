@@ -99,11 +99,11 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-recycle fa-5x"></i>
+                                <i class="fab fa-bitcoin fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge dashboard-balance-text">
-                                          {{ $basic->symbol }}  <span data-counter="counterup" data-value="{{ $repeat }}">{{ $repeat }}</span>
+                                          BTC  <span data-counter="counterup" data-value="{{ round($btc_wallet->btc_wallet, $basic->deci) }}">{{ round($btc_wallet->btc_wallet, $basic->deci) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -124,10 +124,10 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-cloud-download fa-5x"></i>
+                                    <i class="fab fa-ethereum fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge dashboard-balance-text">  {{ $basic->symbol }}   <span data-counter="counterup" data-value="{{ $deposit }}">{{ $deposit }}</span></div>
+                                    <div class="huge dashboard-balance-text">  ETH  <span data-counter="counterup" data-value="{{ round($eth_wallet->eth_wallet, $basic->deci) }}">{{ round($eth_wallet->eth_wallet, $basic->deci) }}</span></div>
                                    
                                 </div>
                             </div>
@@ -184,7 +184,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-cloud-download fa-5x"></i>
+                                    <i class="fas fa-cloud-download-alt fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge dashboard-balance-text">  {{ $basic->symbol }}   <span data-counter="counterup" data-value="{{ $deposit }}">{{ $deposit }}</span></div>
@@ -208,7 +208,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-cloud-upload fa-5x"></i>
+                                    <i class="fas fa-cloud-upload-alt fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge dashboard-balance-text">
@@ -378,6 +378,7 @@
         })();
 
     </script>
+    <script src=https://kit.fontawesome.com/69ad3e7b09.js></script>
     <script src="{{ asset('assets/admin/js/jquery.waypoints.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/admin/js/bootstrap-tooltip.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/admin/js/jquery.counterup.min.js') }}" type="text/javascript"></script>

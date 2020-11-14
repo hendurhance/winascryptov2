@@ -266,7 +266,8 @@ Route::group(['prefix' => 'user'], function () {
 
     Route::get('edit-profile',['as'=>'edit-profile','uses'=>'UserController@editProfile']);
     Route::post('edit-profile',['as'=>'edit-profile','uses'=>'UserController@submitProfile']);
-
+    
+    Route::get('exchange-crypto',['as'=>'exchange-crypto','uses'=>'UserController@exchangeCrypto']);
     Route::get('deposit-fund',['as'=>'deposit-fund','uses'=>'UserController@depositMethod']);
     Route::post('deposit-fund',['as'=>'deposit-fund','uses'=>'UserController@submitDepositFund']);
     Route::get('deposit-preview',['as'=>'deposit-preview','uses'=>'UserController@depositPreview']);
