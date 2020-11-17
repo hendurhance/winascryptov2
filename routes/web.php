@@ -276,7 +276,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('manual-deposit-submit',['as'=>'manual-deposit-submit','uses'=>'UserController@manualDepositSubmit']);
 
     Route::get('transaction-log',['as'=>'user-activity','uses'=>'UserController@userActivity']);
-     Route::get('gateway-redirect',['as'=>'gateway-redirect','uses'=>'UserController@gatewayRedirect']);
+    Route::get('gateway-redirect',['as'=>'gateway-redirect','uses'=>'UserController@gatewayRedirect']);
 
     Route::get('withdraw-request',['as'=>'withdraw-request','uses'=>'UserController@withdrawRequest']);
     Route::post('withdraw-request',['as'=>'withdraw-request','uses'=>'UserController@submitWithdrawRequest']);

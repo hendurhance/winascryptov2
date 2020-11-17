@@ -146,6 +146,25 @@ class UserController extends Controller
         $data['eth_wallet'] = $data['user'];
         return view('user.exchange-crypto', $data);
     }
+    // public function fromBtcToUsd(Request $request){
+    //     $endpoint = 'convert';
+    //     $access_key = '80a889adc0554b3165ba2b8f10e9f4a8';
+        
+    //     $from = 'BTC';
+    //     $to = 'GBP';
+    //     $amount = $fields = Input::post('btc');
+        
+    //     // initialize CURL:
+    //     $ch = curl_init('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'&from='.$from.'&to='.$to.'&amount='.$amount.'');   
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+    //     // get the JSON data:
+    //     $json = curl_exec($ch);
+    //     curl_close($ch);
+        
+    //     // Decode JSON response:
+    //     $conversionResult = json_decode($json, true);
+    // }
     public function depositMethod()
     {
         $data['page_title'] = 'Deposit Method';
