@@ -104,7 +104,7 @@
              <div class="col-xs-8 text-right">
                <p class="font-weight-bolder">BTC TRANSACTION</p>
                <div class="d-flex btn-xch">
-                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exchange_crypto">BUY</button>
+                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#buy_bitcoin">BUY</button>
                  <button class="btn btn-primary">SELL</button>
                </div>
              </div>
@@ -120,7 +120,7 @@
              <div class="col-xs-8 text-right">
                <p class="font-weight-bolder">ETH TRANSACTION</p>
                <div class="d-flex btn-xch">
-                 <button class="btn btn-primary">BUY</button>
+                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#buy_ethereum">BUY</button>
                  <button class="btn btn-primary">SELL</button>
                </div>
              </div>
@@ -133,7 +133,10 @@
  <div class="clearfix"></div>
 </div>
 
-<div class="modal fade" id="exchange_crypto" role="dialog">
+<div>
+<!-- Buy Bitcoin Modal  -->
+
+<div class="modal fade" id="buy_bitcoin" role="dialog" aria-labelledby="buy_bitcoin" aria-hidden="true">
     <div class="modal-dialog modal-md">
     
       <!-- Modal content-->
@@ -145,15 +148,25 @@
         <div class="modal-body">
           <div class="exchange-modal">
              <p class="text-center">Available Balance: <strong id="remainBal"> </strong></p>
-             <div class="input-group">
-               <input type="text" name="btcvalue" id="btcvalue" class="form-control bold" placeholder="Amount of BTC Purchase" required>
-               <span class="input-group-addon">&nbsp;<strong><i class="fab fa-bitcoin"></i></strong></span>
-             </div>
-             <br>
-             <div class="input-group">
-               <input type="text" value="" name="btctousd" id="btctousd" class="form-control bold" placeholder="Amount of BTC Purchase" required>
-               <span class="input-group-addon">&nbsp;<strong><i class="fas fa-dollar-sign"></i></strong></span>
-             </div>
+               <div class="input-group">
+                 <input type="text" id="btcvalue" class="form-control bold" placeholder="Amount of BTC Purchase" required>
+                 <span class="input-group-addon">&nbsp;<strong><i class="fab fa-bitcoin"></i></strong></span>
+               </div>
+               <br>
+               <div class="input-group">
+                 <input type="text" id="btctousd" class="form-control bold" placeholder="Price in USD" required>
+                 <span class="input-group-addon">&nbsp;<strong><i class="fas fa-dollar-sign"></i></strong></span>
+               </div>
+               <br>
+               <form action="{{ route('buy-btc-submit') }}" method="post">
+               {!! csrf_field() !!}
+               <input type="hidden" id="c_btcvalue" name="btcamount" >
+               <input type="hidden" id="c_btctousd" name="btctousd" >
+               <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+               <button id="submitBuyBtc" type="submit" class="btn btn-primary bold uppercase btn-block btn-sm">
+                    <i class="fa fa-cloud-upload"></i> Buy Bitcoin
+                </button>
+             </form>
           </div>
         </div>
         <div class="modal-footer">
@@ -162,48 +175,144 @@
         </div>
         </div>
 </section>
+</div>
 
+
+<div>
+<!-- Buy Ethereum Modal  -->
+<section>
+<div class="modal fade" id="buy_ethereum" role="dialog" aria-labelledby="buy_ethereum" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Buy Ethereum</h4>
+        </div>
+        <div class="modal-body">
+          <div class="exchange-modal">
+             <p class="text-center">Available Balance: <strong id="remainBal"> </strong></p>
+               <div class="input-group">
+                 <input type="text" id="ethvalue" class="form-control bold" placeholder="Amount of ETH Purchase" required>
+                 <span class="input-group-addon">&nbsp;<strong><i class="fab fa-ethereum"></i></strong></span>
+               </div>
+               <br>
+               <div class="input-group">
+                 <input type="text" id="ethtousd" class="form-control bold" placeholder="Price in USD" required>
+                 <span class="input-group-addon">&nbsp;<strong><i class="fas fa-dollar-sign"></i></strong></span>
+               </div>
+               <br>
+               <form action="" method="post">
+               {!! csrf_field() !!}
+               <input type="hidden" id="c_ethvalue" name="ethamount" >
+               <input type="hidden" id="c_ethtousd" name="ethtousd" >
+               <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+               <button id="submitBuyEth" type="submit" class="btn btn-primary bold uppercase btn-block btn-sm">
+                    <i class="fa fa-cloud-upload"></i> Buy Ethereum
+                </button>
+             </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-block" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>
+</section>
+</div>
 @endsection
+
 
 
 
 @section('script')
 <script src=https://kit.fontawesome.com/69ad3e7b09.js></script>
 <script>
-    document.getElementById("btctousd").disabled = true;
-</script>
-<script>
+//Disable input
+document.getElementById("btctousd").disabled = true;
+document.getElementById("submitBuyBtc").disabled = true;
 $(document).ready(function () {
 
   // Modal
     $('#btcvalue').on('keypress, keyup', function(){
-      // $.ajax({
-      //   type: 'GET',
-      //   url: 'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=053B4BB2-6459-40F1-9688-2B2E6C8909FA',
-      //   success: function (data) {
-      //       let rates = data.rate
-      //       let amount = $("#btcvalue").val();
-      //       let calc = amount * rates;
-      //       console.log(calc);
-      //   }
-      // 
-    // })
-      let balance = "{{ round(Auth::user()->balance, $basic->deci) }}";
-      let rates = 40;
-      let amount = $("#btcvalue").val();
-      let calc = amount * rates;
-      let remainBalance = parseInt(balance)-parseInt(calc);
-      console.log(calc);
-      $("#remainBal").html(remainBalance);
-      $("#btctousd").val(calc);
+    //   $.ajax({
+    //     type: 'GET',
+    //     url: 'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=053B4BB2-6459-40F1-9688-2B2E6C8909FA',
+    //     success: function (data) {
+    //         let rates = data.rate
+    //         let amount = $("#btcvalue").val();
+    //         let calc = parseInt(amount) * parseInt(rates);
+    //         console.log(calc);
+    //         let balance = "{{ round(Auth::user()->balance, $basic->deci) }}";
+    //         let remainBalance = parseInt(balance)-parseInt(calc);
+    //         $("#remainBal").html(remainBalance);
+    //         $("#btctousd").val(parseInt(calc));
+            
+    //         if (amount == '' || amount <= 0) {
+    //           document.getElementById("submitBuyBtc").disabled = true;
+    //         }
+    //         else if(calc > balance) {
+    //           swal("Ops!", "Insufficient balance!", "error");
+    //           document.getElementById("submitBuyBtc").disabled = true;
+    //           $("#remainBal").html("");
+    //         }else{
+    //           document.getElementById("submitBuyBtc").disabled = false;
+    //         }
+    //     }
       
-      if (calc > balance) {
-        swal("Ops!", "Insufficient balance!", "error");
-        $("#remainBal").html("");
-      }
+    // })
+            let rates = 13731.2207888;
+            let amount = $("#btcvalue").val();
+            let calc = amount * rates;
+            console.log(Math.round(calc * 1000) / 1000);
+            let balance = "{{ round(Auth::user()->balance, $basic->deci) }}";
+            let remainBalance = parseInt(balance)-parseInt(calc);
+            $("#remainBal").html(remainBalance);
+            $("#btctousd").val(Math.round(calc * 1000) / 1000);
+            
+            if (amount == '' || amount <= 0) {
+              document.getElementById("submitBuyBtc").disabled = true;
+            }
+            else if(calc > balance) {
+              swal("Ops!", "Insufficient balance!", "error");
+              document.getElementById("submitBuyBtc").disabled = true;
+              $("#remainBal").html("");
+            }else if(calc < balance){
+              $("#c_btctousd").val(Math.round(calc * 1000) / 1000);
+              $("#c_btcvalue").val(amount);
+              document.getElementById("submitBuyBtc").disabled = false;
+            }
+            else{
+              document.getElementById("submitBuyBtc").disabled = false;
+            }
+      
 
        
-    })
+  })
 })
 </script>
+@if (session('success'))
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                swal("Success!", "{{ session('success') }}", "success");
+
+            });
+        </script>
+
+    @endif
+
+
+
+    @if (session('alert'))
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                swal("Sorry!", "{{ session('alert') }}", "error");
+            });
+
+        </script>
+    @endif
+
 @endsection

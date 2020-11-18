@@ -61,6 +61,8 @@
                                         <span class="label bold label-success"><i class="fa fa-recycle"></i> Repeat </span>
                                     @elseif($p->amount_type == 14)
                                         <span class="label bold label-success"><i class="fa fa-cloud-upload"></i> Invest </span>
+                                    @elseif($p->amount_type == 7)
+                                        <span class="label bold label-success"><i class="fa fa-cloud-upload"></i> BTC Purchased </span>
                                     @endif
                                 </td>
                                 <td>

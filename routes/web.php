@@ -294,6 +294,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('investment-new',['as'=>'investment-new','uses'=>'UserController@newInvest']);
     Route::post('investment-new',['as'=>'investment-post','uses'=>'UserController@postInvest']);
     Route::post('invest-amount-chk',['as'=>'invest-amount-chk','uses'=>'UserController@chkInvestAmount']);
+    Route::post('buy-btc-submit',['as'=>'buy-btc-submit','uses'=>'UserController@buyBtcSubmit']);
     Route::post('investment-submit',['as'=>'investment-submit','uses'=>'UserController@submitInvest']);
     Route::get('investment-history',['as'=>'investment-history','uses'=>'UserController@historyInvestment']);
     Route::post('invest-amount-review',['as'=>'invest-amount-review','uses'=>'UserController@investAmountReview']);

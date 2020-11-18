@@ -146,25 +146,6 @@ class UserController extends Controller
         $data['eth_wallet'] = $data['user'];
         return view('user.exchange-crypto', $data);
     }
-    // public function fromBtcToUsd(Request $request){
-    //     $endpoint = 'convert';
-    //     $access_key = '80a889adc0554b3165ba2b8f10e9f4a8';
-        
-    //     $from = 'BTC';
-    //     $to = 'GBP';
-    //     $amount = $fields = Input::post('btc');
-        
-    //     // initialize CURL:
-    //     $ch = curl_init('http://api.coinlayer.com/api/'.$endpoint.'?access_key='.$access_key.'&from='.$from.'&to='.$to.'&amount='.$amount.'');   
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        
-    //     // get the JSON data:
-    //     $json = curl_exec($ch);
-    //     curl_close($ch);
-        
-    //     // Decode JSON response:
-    //     $conversionResult = json_decode($json, true);
-    // }
     public function depositMethod()
     {
         $data['page_title'] = 'Deposit Method';
@@ -694,6 +675,57 @@ class UserController extends Controller
             </div>';
         }
 
+    }
+    
+    public function buyBtcSubmit(Request $request){
+        $basic = BasicSetting::first();
+        $user_bal = User::findOrFail(Auth::user()->id)->balance;
+        $user_btc_bal = User::findOrFail(Auth::user()->id)->btcbal;
+
+        $validator = Validator::make($request->all(), [
+            'btcamount' => 'required|numeric',
+            'btctousd' => 'required|numeric|max:' . $user_bal,
+            'user_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('error','Something wrong try again!.');
+            session()->flash('type','error');
+            session()->flash('title','Ops!');
+            return redirect()->back();
+        };
+
+        // if($validator->passes()){
+        //     session()->flash('success','Validator Passess');
+        //     session()->flash('type','success');
+        //     session()->flash('title','Success');
+        //     return redirect()->back();
+        // }
+        $in = Input::except('_method','_token');
+        $in['trx_id'] = strtoupper(Str::random(20));
+
+        $bal4 = User::findOrFail(Auth::user()->id);
+        $ul['user_id'] = $bal4->id;
+        $ul['amount'] = $request->btctousd;
+        $ul['amount_type'] = 7;
+        $ul['post_bal'] = $bal4->balance - $request->btctousd;
+        $ul['description'] = $request->btcamount." BTC,  Purchased at USD RATE ".$request->btctousd." Price.";
+        $ul['transaction_id'] = $in['trx_id'];
+        UserLog::create($ul);
+        $bal4->balance = $bal4->balance - $request->btctousd;
+        $bal4->save();
+        if ($bal4->save()) {
+          $bal4->btc_wallet = $bal4->btc_wallet + $request->btcamount;
+          $bal4->save();
+        }
+        
+
+        session()->flash('success','Transaction Successfully Completed.');
+        session()->flash('type','success');
+        session()->flash('title','Success');
+        return redirect()->back();
+        
+        
     }
 
     public function submitInvest(Request $request)
