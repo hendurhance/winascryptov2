@@ -297,6 +297,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('buy-btc-submit',['as'=>'buy-btc-submit','uses'=>'UserController@buyBtcSubmit']);
     Route::post('sell-btc-submit',['as'=>'sell-btc-submit','uses'=>'UserController@sellBtcSubmit']);
     Route::post('buy-eth-submit',['as'=>'buy-eth-submit','uses'=>'UserController@buyEthSubmit']);
+    Route::post('sell-eth-submit',['as'=>'sell-eth-submit','uses'=>'UserController@sellEthSubmit']);
     Route::post('investment-submit',['as'=>'investment-submit','uses'=>'UserController@submitInvest']);
     Route::get('investment-history',['as'=>'investment-history','uses'=>'UserController@historyInvestment']);
     Route::post('invest-amount-review',['as'=>'invest-amount-review','uses'=>'UserController@investAmountReview']);

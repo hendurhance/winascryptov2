@@ -121,7 +121,7 @@
                <p class="font-weight-bolder">ETH TRANSACTION</p>
                <div class="d-flex btn-xch">
                  <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#buy_ethereum">BUY</button>
-                 <button class="btn btn-primary">SELL</button>
+                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#sell_ethereum">SELL</button>
                </div>
              </div>
             </div>
@@ -206,9 +206,9 @@
                <br>
                <form action="{{ route('sell-btc-submit') }}" method="post">
                {!! csrf_field() !!}
-               <input  id="c_btcsalevalue" name="btcsaleamount" >
-               <input  id="c_usdtobtc" name="usdtobtc" >
-               <input  name="user_id" value="{{ Auth::user()->id }}">
+               <input type="hidden" id="c_btcsalevalue" name="btcsaleamount" >
+               <input type="hidden" id="c_usdtobtc" name="usdtobtc" >
+               <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                <button id="submitSellBtc" type="submit" class="btn btn-primary bold uppercase btn-block btn-sm">
                     <i class="fa fa-cloud-upload"></i> Sell Bitcoin
                 </button>
@@ -267,6 +267,50 @@
         </div>
 </section>
 </div>
+
+<div>
+<!-- Sell Ethereum Modal  -->
+<section>
+<div class="modal fade" id="sell_ethereum" role="dialog" aria-labelledby="sell_ethereum" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sell Ethereum</h4>
+        </div>
+        <div class="modal-body">
+          <div class="exchange-modal">
+             <p class="text-center">Available Balance: <strong id="remainBal3"> </strong></p>
+               <div class="input-group">
+                 <input type="text" id="ethsalevalue" class="form-control bold" placeholder="Amount of ETH to Sell" required>
+                 <span class="input-group-addon">&nbsp;<strong><i class="fab fa-ethereum"></i></strong></span>
+               </div>
+               <br>
+               <div class="input-group">
+                 <input type="text" id="usdtoeth" class="form-control bold" placeholder="Price in USD" required>
+                 <span class="input-group-addon">&nbsp;<strong><i class="fas fa-dollar-sign"></i></strong></span>
+               </div>
+               <br>
+               <form action="{{ route('sell-eth-submit') }}" method="post">
+               {!! csrf_field() !!}
+               <input type="hidden" id="c_ethsalevalue" name="ethsaleamount" >
+               <input type="hidden" id="c_usdtoeth" name="usdtoeth" >
+               <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+               <button id="submitSellEth" type="submit" class="btn btn-primary bold uppercase btn-block btn-sm">
+                    <i class="fa fa-cloud-upload"></i> Sell Ethereum
+                </button>
+             </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-block" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>
+</section>
+</div>
 @endsection
 
 
@@ -282,6 +326,8 @@ document.getElementById("ethtousd").disabled = true;
 document.getElementById("submitBuyEth").disabled = true;
 document.getElementById("submitSellBtc").disabled = true;
 document.getElementById("usdtobtc").disabled = true;
+document.getElementById("submitSellEth").disabled = true;
+document.getElementById("usdtoeth").disabled = true;
 
 $(document).ready(function () {
 
@@ -406,7 +452,62 @@ $('#ethvalue').on('keypress, keyup', function(){
             }
         }
     })
- })
+})
+       // Modal for Sell ETH
+  $('#ethsalevalue').on('keypress, keyup', function(){
+      // $.ajax({
+      //   type: 'GET',
+      //   url: 'https://rest.coinapi.io/v1/exchangerate/ETH/USD?apikey=053B4BB2-6459-40F1-9688-2B2E6C8909FA',
+      //   success: function (data) {
+      //       let rates = data.rate
+      //       let amount = $("#ethsalevalue").val();
+      //       let calc = amount * rates;
+      //       console.log(Math.round(calc * 1000) / 1000);
+      //       let balance = "{{ Auth::user()->eth_wallet }}";
+      //       let remainBalance = parseInt(balance)-parseInt(amount);
+      //       $("#remainBal3").html(remainBalance);
+      //       $("#usdtoeth").val(Math.round(calc * 1000) / 1000);
+            
+      //       if (amount == '' || amount <= 0) {
+      //         document.getElementById("submitSellEth").disabled = true;
+      //       }
+      //       else if(amount > balance) {
+      //         swal("Ops!", "Insufficient balance!", "error");
+      //         document.getElementById("submitSellEth").disabled = true;
+      //         $("#remainBal3").html("");
+      //       }else if(amount < balance){
+      //         $("#c_usdtoeth").val(Math.round(calc * 1000) / 1000);
+      //         $("#c_ethsalevalue").val(amount);
+      //         document.getElementById("submitSellEth").disabled = false;
+      //       }else{
+      //         document.getElementById("submitSellEth").disabled = false;
+      //       }
+      //   }
+    //  })
+            const rates = 471.87;
+            const amount = $("#ethsalevalue").val();
+            const calc = amount * rates;
+            console.log(Math.round(calc * 1000) / 1000);
+            const balance = "{{ Auth::user()->eth_wallet }}";
+            const remainBalance = parseInt(balance)-parseInt(amount);
+            $("#remainBal3").html(remainBalance);
+            $("#usdtoeth").val(Math.round(calc * 1000) / 1000);
+            
+            if (parseInt(amount) == '' || parseInt(amount) <= 0) {
+              document.getElementById("submitSellEth").disabled = true;
+            }else if(parseInt(amount) > parseInt(balance)){
+              swal("Ops!", "Insufficient balance!", "error");
+              document.getElementById("submitSellEth").disabled = true;
+              $("#remainBal3").html("");
+            }else if (parseInt(amount) < parseInt(balance)){
+              $("#c_usdtoeth").val(Math.round(calc * 1000) / 1000);
+              $("#c_ethsalevalue").val(amount);
+              document.getElementById("submitSellEth").disabled = false;
+            }else{
+              document.getElementById("submitSellEth").disabled = false;
+            }
+            
+    })
 })
 </script>
 @if (session('success'))
