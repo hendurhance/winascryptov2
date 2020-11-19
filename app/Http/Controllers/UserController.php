@@ -727,6 +727,107 @@ class UserController extends Controller
         
         
     }
+    
+    public function sellBtcSubmit(Request $request){
+        $basic = BasicSetting::first();
+        $user_bal_btc = User::findOrFail(Auth::user()->id)->btc_wallet;
+
+        $validator = Validator::make($request->all(), [
+            'usdtobtc' => 'required|numeric',
+            'btcsaleamount' => 'required|numeric|max:' .$user_bal_btc,
+            'user_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('error','Something wrong try again!.');
+            session()->flash('type','error');
+            session()->flash('title','Ops!');
+            return redirect()->back();
+        };
+
+        // if($validator->passes()){
+        //     session()->flash('success','Validator Passess');
+        //     session()->flash('type','success');
+        //     session()->flash('title','Success');
+        //     return redirect()->back();
+        // }
+        $in = Input::except('_method','_token');
+        $in['trx_id'] = strtoupper(Str::random(20));
+
+        $bal4 = User::findOrFail(Auth::user()->id);
+        $ul['user_id'] = $bal4->id;
+        $ul['amount'] = $request->btcsaleamount;
+        $ul['amount_type'] = 13;
+        $ul['post_bal'] = $bal4->btc_wallet - $request->btcsaleamount;
+        $ul['description'] = $request->btcsaleamount." BTC,  Sold at USD RATE ".$request->usdtobtc." Price.";
+        $ul['transaction_id'] = $in['trx_id'];
+        UserLog::create($ul);
+        $bal4->balance = $bal4->balance + $request->usdtobtc;
+        $bal4->save();
+        if ($bal4->save()) {
+          $bal4->btc_wallet = $bal4->btc_wallet - $request->btcsaleamount;
+          $bal4->save();
+        }
+        
+
+        session()->flash('success','Transaction Successfully Completed.');
+        session()->flash('type','success');
+        session()->flash('title','Success');
+        return redirect()->back();
+        
+        
+    }
+
+    public function buyEthSubmit(Request $request){
+        $basic = BasicSetting::first();
+        $user_bal = User::findOrFail(Auth::user()->id)->balance;
+        $user_eth_bal = User::findOrFail(Auth::user()->id)->ethbal;
+
+        $validator = Validator::make($request->all(), [
+            'ethamount' => 'required|numeric',
+            'ethtousd' => 'required|numeric|max:' . $user_bal,
+            'user_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('error','Something wrong try again!.');
+            session()->flash('type','error');
+            session()->flash('title','Ops!');
+            return redirect()->back();
+        };
+
+        // if($validator->passes()){
+        //     session()->flash('success','Validator Passess');
+        //     session()->flash('type','success');
+        //     session()->flash('title','Success');
+        //     return redirect()->back();
+        // }
+        $in = Input::except('_method','_token');
+        $in['trx_id'] = strtoupper(Str::random(20));
+
+        $bal4 = User::findOrFail(Auth::user()->id);
+        $ul['user_id'] = $bal4->id;
+        $ul['amount'] = $request->ethtousd;
+        $ul['amount_type'] = 11;
+        $ul['post_bal'] = $bal4->balance - $request->ethtousd;
+        $ul['description'] = $request->ethamount." ETH,  Purchased at USD RATE ".$request->ethtousd." Price.";
+        $ul['transaction_id'] = $in['trx_id'];
+        UserLog::create($ul);
+        $bal4->balance = $bal4->balance - $request->ethtousd;
+        $bal4->save();
+        if ($bal4->save()) {
+          $bal4->eth_wallet = $bal4->eth_wallet + $request->ethamount;
+          $bal4->save();
+        }
+        
+
+        session()->flash('success','Transaction Successfully Completed.');
+        session()->flash('type','success');
+        session()->flash('title','Success');
+        return redirect()->back();
+        
+        
+    }
 
     public function submitInvest(Request $request)
     {
