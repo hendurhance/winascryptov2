@@ -59,6 +59,14 @@
                                         <span class="label bold label-warning"><i class="fa fa-recycle"></i> Repeat </span>
                                     @elseif($p->amount_type == 14)
                                         <span class="label bold label-success"><i class="fa fa-cloud-upload"></i> Invest </span>
+                                    @elseif($p->amount_type == 7)
+                                    <span class="label bold label-success"><i class="fa fa-cloud-upload"></i> ETH Purchased </span>
+                                    @elseif($p->amount_type == 12)
+                                        <span class="label bold label-danger"><i class="fa fa-cloud-upload"></i> ETH Sold </span>
+                                    @elseif($p->amount_type == 13)
+                                        <span class="label bold label-danger"><i class="fa fa-cloud-upload"></i> BTC Sold </span>
+                                    @elseif($p->amount_type == 7)
+                                        <span class="label bold label-success"><i class="fa fa-cloud-upload"></i> BTC Purchased </span>
                                     @endif
                                 </td>
                                 <td>
