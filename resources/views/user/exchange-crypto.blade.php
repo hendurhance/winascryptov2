@@ -365,38 +365,11 @@ $(document).ready(function () {
  })
 
  $('#btcsalevalue').on('keypress, keyup', function(){
-    //   $.ajax({
-    //     type: 'GET',
-    //     url: 'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=053B4BB2-6459-40F1-9688-2B2E6C8909FA',
-    //     success: function (data) {
-    //         let rates = data.rate
-    //         let amount = $("#btcsalevalue").val();
-    //         let calc = amount * rates;
-    //         console.log(Math.round(calc * 1000) / 1000);
-    //         let balance = "{{ Auth::user()->btc_wallet }}";
-    //         let remainBalance = parseInt(balance)-parseInt(amount);
-    //         $("#remainBal2").html(remainBalance);
-    //         $("#usdtobtc").val(Math.round(calc * 1000) / 1000);
-            
-    //         if (amount == '' || amount <= 0) {
-    //           document.getElementById("submitSellBtc").disabled = true;
-    //         }
-    //         else if(amount > balance) {
-    //           swal("Ops!", "Insufficient balance!", "error");
-    //           document.getElementById("submitSellBtc").disabled = true;
-    //           $("#remainBal2").html("");
-    //         }else if(amount < balance){
-    //           $("#c_usdtobtc").val(Math.round(calc * 1000) / 1000);
-    //           $("#c_btcsalevalue").val(amount);
-    //           document.getElementById("submitSellBtc").disabled = false;
-    //         }else{
-    //           document.getElementById("submitSellBtc").disabled = false;
-    //         }
-    //     }
-    // })
-            
-            
-            let rates = 17324.986;
+      $.ajax({
+        type: 'GET',
+        url: 'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=053B4BB2-6459-40F1-9688-2B2E6C8909FA',
+        success: function (data) {
+            let rates = data.rate
             let amount = $("#btcsalevalue").val();
             let calc = amount * rates;
             console.log(Math.round(calc * 1000) / 1000);
@@ -419,6 +392,10 @@ $(document).ready(function () {
             }else{
               document.getElementById("submitSellBtc").disabled = false;
             }
+        }
+    })
+            
+          
  })
 
    // Modal for ETH
@@ -455,36 +432,11 @@ $('#ethvalue').on('keypress, keyup', function(){
 })
        // Modal for Sell ETH
   $('#ethsalevalue').on('keypress, keyup', function(){
-      // $.ajax({
-      //   type: 'GET',
-      //   url: 'https://rest.coinapi.io/v1/exchangerate/ETH/USD?apikey=053B4BB2-6459-40F1-9688-2B2E6C8909FA',
-      //   success: function (data) {
-      //       let rates = data.rate
-      //       let amount = $("#ethsalevalue").val();
-      //       let calc = amount * rates;
-      //       console.log(Math.round(calc * 1000) / 1000);
-      //       let balance = "{{ Auth::user()->eth_wallet }}";
-      //       let remainBalance = parseInt(balance)-parseInt(amount);
-      //       $("#remainBal3").html(remainBalance);
-      //       $("#usdtoeth").val(Math.round(calc * 1000) / 1000);
-            
-      //       if (amount == '' || amount <= 0) {
-      //         document.getElementById("submitSellEth").disabled = true;
-      //       }
-      //       else if(amount > balance) {
-      //         swal("Ops!", "Insufficient balance!", "error");
-      //         document.getElementById("submitSellEth").disabled = true;
-      //         $("#remainBal3").html("");
-      //       }else if(amount < balance){
-      //         $("#c_usdtoeth").val(Math.round(calc * 1000) / 1000);
-      //         $("#c_ethsalevalue").val(amount);
-      //         document.getElementById("submitSellEth").disabled = false;
-      //       }else{
-      //         document.getElementById("submitSellEth").disabled = false;
-      //       }
-      //   }
-    //  })
-            const rates = 471.87;
+      $.ajax({
+        type: 'GET',
+        url: 'https://rest.coinapi.io/v1/exchangerate/ETH/USD?apikey=053B4BB2-6459-40F1-9688-2B2E6C8909FA',
+        success: function (data) {
+            let rates = data.rate
             const amount = $("#ethsalevalue").val();
             const calc = amount * rates;
             console.log(Math.round(calc * 1000) / 1000);
@@ -506,6 +458,9 @@ $('#ethvalue').on('keypress, keyup', function(){
             }else{
               document.getElementById("submitSellEth").disabled = false;
             }
+        }
+     })
+            
             
     })
 })
